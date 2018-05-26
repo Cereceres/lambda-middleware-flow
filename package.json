@@ -1,0 +1,28 @@
+{
+  "name": "lambda-middleware-flow",
+  "version": "0.0.1",
+  "description": "middleware flow to lambda aws",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Cereceres/lambda-middleware-flow.git"
+  },
+  "keywords": [
+    "lambda",
+    "middlware",
+    "flow"
+  ],
+  "author": "Jesus Edel Cereceres",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Cereceres/lambda-middleware-flow/issues"
+  },
+  "homepage": "https://github.com/Cereceres/lambda-middleware-flow#readme",
+  "dependencies": {
+    "aws-lambda-testing": "^0.2.6",
+    "nexting-queue": "0.0.1"
+  }
+}
