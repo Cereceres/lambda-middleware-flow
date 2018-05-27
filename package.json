@@ -4,7 +4,7 @@
   "description": "middleware flow to lambda aws",
   "main": "index.js",
   "scripts": {
-    "test": "mocha test"
+    "test": "mocha test --exit"
   },
   "repository": {
     "type": "git",
@@ -22,7 +22,6 @@
   },
   "homepage": "https://github.com/Cereceres/lambda-middleware-flow#readme",
   "dependencies": {
-    "aws-lambda-testing": "^0.2.6",
-    "nexting-queue": "0.0.1"
+    "aws-lambda-testing": "^0.2.6"
   }
 }
