@@ -12,7 +12,6 @@ module.exports = class Lambda {
     next(err) {
         if (this.called) return;
 
-        console.log('next called with ', err);
         if (err) return this.cb(err);
 
         if (!this.flow.length) return this.cb(err);
@@ -20,7 +19,6 @@ module.exports = class Lambda {
         let called = false;
         const cb = this.flow.shift();
         const res = cb(this.event, this.ctx, this.cb.bind(this), (error) => {
-            console.log('next called in  cb ', error);
             called = true;
             this.next(error);
         });
@@ -47,8 +45,6 @@ module.exports = class Lambda {
             this.ctx = ctx;
             this.called = false;
             this.cb = (err, res) => {
-                console.log('error and res in cb ', err, res);
-                console.log('called cb ', this.called);
                 if (!this.called) cb(err, res);
                 this.called = true;
             };
