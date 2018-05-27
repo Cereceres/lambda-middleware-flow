@@ -5,8 +5,6 @@ middleware support to lambda functions
 ```js
 const LambdaWithMiddlewareSupport = require('lambda-middleware-flow')
 const lambda = new LambdaWithMiddlewareSupport()
-const event = {};
-const handler = new Lambda();
 lambda.use((_event, ctx, cb, next) => {
     assert.deepEqual(event, _event);
     assert(ctx);
@@ -29,3 +27,12 @@ lambda.use((_event, ctx, cb, next) => {
 });
 lambda.handler()// return a aws lambda handler
 ```
+
+
+# API
+
+## instance method
+
+### handler() -> return a aws lambda handler
+
+### use(middleware,[others]) -> self

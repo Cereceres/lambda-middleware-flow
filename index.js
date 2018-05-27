@@ -7,6 +7,7 @@ module.exports = class Lambda {
 
     use(...cbs) {
         this.flow.push(...cbs);
+        return this;
     }
 
     next(err) {
