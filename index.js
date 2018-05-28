@@ -13,7 +13,6 @@ module.exports = class Lambda {
     }
 
     next(err) {
-        console.log('this.cb.cbIsCalled ', this.cb.cbIsCalled);
         if (this.cb.cbIsCalled) return;
 
         if (err) return this.cb(err);
