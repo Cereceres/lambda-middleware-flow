@@ -1,6 +1,6 @@
 {
   "name": "lambda-middleware-flow",
-  "version": "0.0.4",
+  "version": "0.0.6",
   "description": "middleware flow to lambda aws",
   "main": "index.js",
   "scripts": {
@@ -23,6 +23,7 @@
   "homepage": "https://github.com/Cereceres/lambda-middleware-flow#readme",
   "dependencies": {
     "aws-lambda-testing": "^0.2.6",
+    "joi": "^13.3.0",
     "only-some-times": "0.0.3"
   }
 }
