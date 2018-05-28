@@ -1,3 +1,5 @@
+const someTimes = require('only-some-times');
+
 const validateParamsFromAws = require('./lib/validate-params-from-aws');
 
 module.exports = class Lambda {
@@ -11,20 +13,21 @@ module.exports = class Lambda {
     }
 
     next(err) {
-        if (this.called) return;
+        console.log('this.cb.cbIsCalled ', this.cb.cbIsCalled);
+        if (this.cb.cbIsCalled) return;
 
         if (err) return this.cb(err);
 
         if (!this.flow.length) return this.cb(err);
 
-        let called = false;
         const cb = this.flow.shift();
-        const res = cb(this.event, this.ctx, this.cb.bind(this), (error) => {
-            called = true;
-            this.next(error);
-        });
+        const next = someTimes(this.next.bind(this)).bind(this);
+        const res = cb(this.event, this.ctx, this.cb, next);
+        const waitForPromiseReturned = res instanceof Promise &&
+            !next.cbIsCalled &&
+            !this.cb.cbIsCalled;
 
-        if (res instanceof Promise && !called && !this.called) return res
+        if (waitForPromiseReturned) return res
             .then(() => this.next())
             .catch(this.next);
     }
@@ -32,7 +35,9 @@ module.exports = class Lambda {
     handler(parserParamsFromAws) {
         return (_event, _ctx, _cb) => {
             validateParamsFromAws(_ctx, _cb);
-            let event = _event, ctx = _ctx, cb = _cb;
+            let event = _event;
+            let ctx = _ctx;
+            let cb = _cb;
 
             if (typeof parserParamsFromAws === 'function') ({
                 event = _event,
@@ -41,14 +46,9 @@ module.exports = class Lambda {
             } = parserParamsFromAws(_event, _ctx, _cb));
 
             validateParamsFromAws(ctx, cb, true);
-
             this.event = event;
             this.ctx = ctx;
-            this.called = false;
-            this.cb = (err, res) => {
-                if (!this.called) cb(err, res);
-                this.called = true;
-            };
+            this.cb = someTimes(cb.bind(this));
             return this.next();
         };
     }

@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/Cereceres/lambda-middleware-flow#readme",
   "dependencies": {
-    "aws-lambda-testing": "^0.2.6"
+    "aws-lambda-testing": "^0.2.6",
+    "only-some-times": "0.0.3"
   }
 }
