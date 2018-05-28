@@ -5,6 +5,7 @@ const validateParamsFromAws = require('./lib/validate-params-from-aws');
 module.exports = class Lambda {
     constructor() {
         this.flow = [];
+        this.index = 0;
     }
 
     use(...cbs) {
@@ -17,9 +18,10 @@ module.exports = class Lambda {
 
         if (err) return this.cb(err);
 
-        if (!this.flow.length) return this.cb(err);
+        if (this.index === this.flow.length) return this.cb(err);
 
-        const cb = this.flow.shift();
+        const cb = this.flow[this.index];
+        this.index++;
         const next = someTimes(this.next.bind(this)).bind(this);
         const res = cb(this.event, this.ctx, this.cb, next);
         const waitForPromiseReturned = res instanceof Promise &&
@@ -48,6 +50,7 @@ module.exports = class Lambda {
             this.event = event;
             this.ctx = ctx;
             this.cb = someTimes(cb.bind(this));
+            this.index = 0;
             return this.next();
         };
     }
