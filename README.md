@@ -6,24 +6,20 @@ middleware support to lambda functions
 const LambdaWithMiddlewareSupport = require('lambda-middleware-flow')
 const lambda = new LambdaWithMiddlewareSupport()
 lambda.use((_event, ctx, cb, next) => {
-    assert.deepEqual(event, _event);
-    assert(ctx);
-    assert(cb);
+    // here is the first middleware
     next();
 });
 
 lambda.use((_event, ctx, cb, next) => {
-    assert.deepEqual(event, _event);
-    assert(ctx);
-    assert(cb);
-    next();
+    // second middleware
+    const response = {}
+    const error = null
+    next()
 });
 
 lambda.use((_event, ctx, cb, next) => {
-    assert.deepEqual(event, _event);
-    assert(ctx);
-    assert(cb);
-    next(); // if next is called with argument is interpreted like an error
+    // last middleware is here
+    cb(error, response)
 });
 lambda.handler()// return a aws lambda handler
 ```
