@@ -1,6 +1,6 @@
 {
   "name": "lambda-middleware-flow",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "middleware flow to lambda aws",
   "main": "index.js",
   "scripts": {
